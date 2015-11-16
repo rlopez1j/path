@@ -1,0 +1,130 @@
+#ifndef H_MINHEAP_H
+#define H_MINHEAP_H
+
+
+#include <iostream>
+#include <vector>
+using namespace std;
+ 
+template<class TYPE>
+class minHeap//:Graph
+{
+private:
+	vector<TYPE*> items;
+	int numItems;
+	int capacity;
+
+	//suplimental functions
+	int parent(int i) { return (i - 1) / 2; }
+	int lchild(int i) { return 2 * i + 1; }
+	int rchild(int i) { return lchild(i) + 1; }
+
+	void bubbleUp(int i)
+	{
+		if (items[i]->weight < items[parent(i)]->weight)
+		{
+			swap(items[i]->weight, items[parent(i)]->weight);
+			bubbleUp(parent(i));
+		}
+	}
+	void bubbleDown(int i)
+	{
+		if(lchild(i) > (numItems-1))
+		{}
+		else
+		{
+			//boundary condition for only lchild left
+			if(rchild(i) > (numItems-1))
+			{
+				if(items[i]->weight > items[lchild(i)]->weight)
+				{
+					swap(items[i],items[lchild(i)]);
+					bubbleDown(lchild(i));
+				}
+			}
+			//when everything is fine
+			else
+			{
+				if(items[lchild(i)]->weight < items[rchild(i)]->weight)
+				{
+					if(items[i]->weight > items[lchild(i)]->weight)
+					{
+						swap(items[i]->weight,items[lchild(i)]->weight);
+						bubbleDown(lchild(i));
+					}
+				}
+				else
+				{
+					if(items[i]->weight > items[rchild(i)]->weight)	
+					{
+						swap(items[i]->weight,items[rchild(i)]->weight);
+						 bubbleDown(rchild(i));
+					}
+				}
+			}
+		}
+	}
+public:
+	minHeap()
+	{
+		capacity = 100;
+		numItems = 0;
+		items = vector <TYPE*>(capacity);
+	}
+	minHeap(int c)
+	{
+		capacity = c;
+		numItems = 0;
+		items = vector <TYPE*>(c);
+	}
+	void insert(TYPE x)
+	{
+		items[numItems] = x;
+		numItems++;
+
+		bubbleUp(numItems -1);
+	}
+	TYPE extractMin() //fix this
+	{
+		TYPE min = items[0];
+
+		swap(items[numItems - 1]->weight, items[0]->weight);
+		numItems--;
+
+		bubbleDown(0);
+
+		return min;
+	}
+	bool empty()
+	{
+		if (numItems == 0)
+			return true;
+		else
+			return false;
+	}
+
+	void decreaseKey(int index, int newValue) //check if this is correct
+	{
+		items[index]->weight = newValue;
+
+		if (items[index]->weight < items[parent(index)]->weight)
+			bubbleUp(index);
+	}
+
+	//this method should remove the item at the given index from the heap
+	void remove(int index)
+	{
+		swap(items[index]->weight, items[numItems - 1]->weight);
+		numItems--;
+
+		bubbleDown(index);
+	}
+	//my own
+	void display()
+	{
+		for (int i = 0; i < numItems; i++)
+			cout << items[i]->weight << endl;
+	}
+};
+
+#endif
