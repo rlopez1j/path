@@ -2,13 +2,13 @@
 #define H_CHAININGTABLE_H
 
 #include "linkedList.h"
-#include "weightedGraph.h"
 #include <iostream>
 #include <string>
 using namespace std;
 //class Graph;
-//template <class TYPE> 
-class chainingTable//:public Graph
+
+template <class TYPE> 
+class chainingTable:protected Graph
 {
 private:
 	//hash table conists of a table of lists
@@ -20,14 +20,19 @@ private:
 	int numItems;
 
 	int createKey(vertex* v) { return 37* v->address % capacity; }
-	int createKey(edge e) { return (e.start->addres * 37) + (e.end->address * 37) % capacity; }
-	int createKey(int addss) { return addrss%capacity; }
+	int createKey(edge e) { return (e.start->address * 37) + (e.end->address * 37) % capacity; }
+	int createKey(int addss) { return addss%capacity; }
 
-	void insert_(int key, TYPE t)
+	void insert(int key, TYPE e)
 	{
-		table[key].enqueue(t);
+		table[key].enqueue(e);
 		numItems++;
 	}
+	/*void insert(int key, vertex * v)
+	{
+		table[key].enqueue(e);
+		numItems++;
+	}*/
 
 
 public:
@@ -45,8 +50,8 @@ public:
 		numItems = 0;
 	}
 	
-	void insert(edge e) { insert_(createKey<edge>(e),e); }
-	void insert(vertex* v) { insert_(createKey<vertex*>(v), v); }
+	void insert(edge e) { insert_(createKey(e),e); }
+	void insert(vertex* v) { insert_(createKey(v), v); }
 
 	int size() { return capacity; }
 
@@ -58,6 +63,7 @@ public:
 
 	//overloadbracket operator
 	TYPE& operator[](int i) { return table[i]; }
+
 };
 
 #endif
