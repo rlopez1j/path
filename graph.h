@@ -3,18 +3,18 @@
 #include <string>
 #include <algorithm>
 #include <limits>
-//#include "chainingTable.h"
+#include "chainingTable.h"
 #include "minHeap.h"
 using namespace std;
 
 class Graph
 {
 protected:
+	//template <class TYPE> class linkedList;
+	//template <class TYPE> class chainingTable;
+	//class minHeap;	
 	class vertex;
 	class edge;
-	class minHeap;
-	class chainingTable;
-	class linkedList;
 
 	class vertex //basically, a node...
 	{
@@ -56,7 +56,7 @@ protected:
 
 	vertex * findVertex(int addrs) { return vertexList.findVertex(addrs); }
 	int weight(vertex *v, vertex *u) { return v->weight + u->weight; }
-	void relax(vertex * v, vertex * u,int i, minHeap<vertex*> h)
+	void relax(vertex * v, vertex * u,int i, minHeap h)
 	{
 		if(v->weight > u->weight+weight(v,u))
 		{
@@ -80,7 +80,7 @@ public:
 
 	void dijktra(vertex *v)
 	{
-		minHeap<vertex*> heap;
+		minHeap heap;
 		vertex * x;
 		//1)
 		v->weight = 0;
