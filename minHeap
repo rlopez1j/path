@@ -1,16 +1,15 @@
-#ifndef H_MINHEAP_H
-#define H_MINHEAP_H
-
+#ifndef MINHEAP_H
+#define MINHEAP_H
 
 #include <iostream>
 #include <vector>
+//#include "weightedGraph.h"
 using namespace std;
- 
-template<class TYPE>
-class minHeap//:Graph
+
+class minHeap :protected Graph
 {
 private:
-	vector<TYPE*> items;
+	vector<vertex*> items;
 	int numItems;
 	int capacity;
 
@@ -69,24 +68,24 @@ public:
 	{
 		capacity = 100;
 		numItems = 0;
-		items = vector <TYPE*>(capacity);
+		items = vector <vertex*>(capacity);
 	}
 	minHeap(int c)
 	{
 		capacity = c;
 		numItems = 0;
-		items = vector <TYPE*>(c);
+		items = vector <vertex*>(c);
 	}
-	void insert(TYPE x)
+	void insert(vertex* x)
 	{
 		items[numItems] = x;
 		numItems++;
 
 		bubbleUp(numItems -1);
 	}
-	TYPE extractMin() //fix this
+	vertex* extractMin() //fix this
 	{
-		TYPE min = items[0];
+		vertex* min = items[0];
 
 		swap(items[numItems - 1]->weight, items[0]->weight);
 		numItems--;
@@ -126,5 +125,4 @@ public:
 			cout << items[i]->weight << endl;
 	}
 };
-
 #endif
