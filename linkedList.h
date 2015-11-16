@@ -1,11 +1,12 @@
 #ifndef H_LINKEDLIST_H
 #define H_LINKEDLIST_H
 
-#include <iostream>	
+#include <iostream>
+//#include "weightedGraph.h"
 using namespace std;
 
 template <class TYPE>
-class linkedList//:Graph
+class inkedList:protected Graph
 {
 private:
 	class node
@@ -23,7 +24,7 @@ private:
 
 	node * head, * tail;
 
-	vertex * findV_(int x, node * p) //check if need
+	vertex * findV_(int x, node * p)
 	{
 		if (p == NULL)
 			return;
@@ -55,7 +56,7 @@ public:
 		}
 	}
 
-	*Graph::vertex findV(int x) { return findV_(x, head); } //possible <vertex*> needed
+	*vertex findV(int x) { return findV_(x, head); }
 };
 
 #endif
